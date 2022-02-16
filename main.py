@@ -59,6 +59,23 @@ def DetectObjects(image_path, object_xml_path, newfilepath):
     print("Output Image created!!")
   else:
     print("Faces are not detected!!")
+
+def addWaterMark(image_path, watermark_path, outputfile_path):
+  watermark = getImageArrayColor(watermark_path)
+  image = getImageArrayColor(image_path)
+  
+  x = image.shape[1] - watermark.shape[1]
+  y = image.shape[0] - watermark.shape[0]
+
+  watermark_place = image[y:, x:]
+  cv2.imwrite("watermark/watermark_place.jpeg", watermark_place)
+
+  blend = cv2.addWeighted(src1=watermark_place, alpha=0.5, src2=watermark, beta=0.5, gamma=0)
+
+  cv2.imwrite("watermark/blend.jpeg", blend)
+
+  image[y:, x:] = blend
+  cv2.imwrite(outputfile_path, image)
   
 #case 1 : get image array
 #print(getImageArray('galaxy.jpeg'))
@@ -75,4 +92,7 @@ def DetectObjects(image_path, object_xml_path, newfilepath):
 #case 5 : Detect Faces
 #DetectObjects("faces.jpg", "config/faces.xml", "humanfaces.png")
 
-  
+#case 6 : Add watermark to image
+#addWaterMark("watermark/faces.jpg", "watermark/sign.png", "watermark/imagewithwatermark.jpeg")
+
+
