@@ -123,6 +123,6 @@ def removeGreenBackground(image_path, backimage_path):
 #addWaterMark("watermark/faces.jpg", "watermark/sign.png", "watermark/imagewithwatermark.jpeg")
 
 #case 7 : Remove Background
-removeGreenBackground("background/foreground.jpg", "background/background.jpeg")
+#removeGreenBackground("background/foreground.jpg", "background/background.jpeg")
 
 
