@@ -76,6 +76,30 @@ def addWaterMark(image_path, watermark_path, outputfile_path):
 
   image[y:, x:] = blend
   cv2.imwrite(outputfile_path, image)
+
+def removeGreenBackground(image_path, backimage_path):
+  foreground = getImageArrayColor(image_path)
+  background = getImageArrayColor(backimage_path)
+
+  print(foreground[40,40]) # get the rgb values of green pixel
+  
+  width = foreground.shape[1]
+  height = foreground.shape[0]
+  
+  for i in range(width):
+    for j in range(height):
+      pixel = foreground[j,i]
+      pixel_list = list(pixel)
+      if ( (pixel_list[0] < 90) & (pixel_list[0] > 55) & (pixel_list[1] < 280) & (pixel_list[1] > 250) & (pixel_list[2] < 55)):
+        foreground[j,i] = background[j,i]
+        
+
+  cv2.imwrite("output.jpeg", foreground)
+  print("file generated!!")
+      
+    
+  
+  
   
 #case 1 : get image array
 #print(getImageArray('galaxy.jpeg'))
@@ -94,5 +118,8 @@ def addWaterMark(image_path, watermark_path, outputfile_path):
 
 #case 6 : Add watermark to image
 #addWaterMark("watermark/faces.jpg", "watermark/sign.png", "watermark/imagewithwatermark.jpeg")
+
+#case 7 : Remove Background
+#removeGreenBackground("background/foreground.jpg", "background/background.jpeg")
 
 
