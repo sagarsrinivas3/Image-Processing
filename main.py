@@ -91,6 +91,10 @@ def removeGreenBackground(image_path, backimage_path):
     for j in range(height):
       pixel = foreground[j,i]
       pixel_list = list(pixel)
+
+      #use resize_back for correct size of background and replace background with resize_back
+      #resize_back = cv2.resize(background, (width, height ))
+      
       if np.any(pixel == [54, 254,28]) | np.any(pixel == [53, 253,31]):
         foreground[j,i] = background[j,i]   # as prescribed
       if ( (pixel_list[0] < 90) & (pixel_list[0] > 55) & (pixel_list[1] < 280) & (pixel_list[1] > 250) & (pixel_list[2] < 55)):    # trail
