@@ -1,5 +1,6 @@
 import cv2
 import os
+import numpy as np
 
 def getImageArrayColor(image):
   color = cv2.imread(image, 1) # 1 for color 0 for b&w
@@ -90,7 +91,9 @@ def removeGreenBackground(image_path, backimage_path):
     for j in range(height):
       pixel = foreground[j,i]
       pixel_list = list(pixel)
-      if ( (pixel_list[0] < 90) & (pixel_list[0] > 55) & (pixel_list[1] < 280) & (pixel_list[1] > 250) & (pixel_list[2] < 55)):
+      if np.any(pixel == [54, 254,28]) | np.any(pixel == [53, 253,31]):
+        foreground[j,i] = background[j,i]   # as prescribed
+      if ( (pixel_list[0] < 90) & (pixel_list[0] > 55) & (pixel_list[1] < 280) & (pixel_list[1] > 250) & (pixel_list[2] < 55)):    # trail
         foreground[j,i] = background[j,i]
         
 
@@ -120,6 +123,6 @@ def removeGreenBackground(image_path, backimage_path):
 #addWaterMark("watermark/faces.jpg", "watermark/sign.png", "watermark/imagewithwatermark.jpeg")
 
 #case 7 : Remove Background
-#removeGreenBackground("background/foreground.jpg", "background/background.jpeg")
+removeGreenBackground("background/foreground.jpg", "background/background.jpeg")
 
 
